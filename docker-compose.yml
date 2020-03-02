@@ -29,8 +29,8 @@ services:
       ports:
         - "27017:27017"
       volumes:
-        - "dev-mongo:/data/db"
-        - "dev-mongo-config:/data/configdb"
+        - .docker/data/db:/var/lib/mongodb
+        - .docker/data/db:/var/lib/mongodb_config
       healthcheck:
         test: echo 'db.runCommand("ping").ok' | mongo localhost:27017/test --quiet || exit 1
         interval: 1m
