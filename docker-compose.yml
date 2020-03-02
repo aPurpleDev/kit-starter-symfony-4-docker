@@ -29,8 +29,8 @@ services:
       ports:
         - "27017:27017"
       volumes:
-        - .docker/data/db:/var/lib/mongodb
-        - .docker/data/db:/var/lib/mongodb_config
+        - "dev-mongo:/data/db"
+        - "dev-mongo-config:/data/configdb"
       healthcheck:
         test: echo 'db.runCommand("ping").ok' | mongo localhost:27017/test --quiet || exit 1
         interval: 1m
@@ -66,3 +66,11 @@ services:
         container_name: sf4_maildev
         ports:
           - 8001:80
+
+volumes:
+  data:
+      apache: sf4_apache
+      mysql: sf4_mysql
+      mongodb: docfony-mongo
+      php: sf4_php
+
