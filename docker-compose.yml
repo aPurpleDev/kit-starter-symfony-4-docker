@@ -23,6 +23,22 @@ services:
             MYSQL_USER: sf4
             MYSQL_PASSWORD: sf4
 
+    mongo:
+      image: mongo:4-bionic
+      container_name: docfony-mongo
+      ports:
+        - "27017:27017"
+      volumes:
+        - "dev-mongo:/data/db"
+        - "dev-mongo-config:/data/configdb"
+      healthcheck:
+        test: echo 'db.runCommand("ping").ok' | mongo localhost:27017/test --quiet || exit 1
+        interval: 1m
+        timeout: 10s
+        retries: 3
+      networks:
+        - symfony_dev
+
     php:
         build: .docker/php
         container_name: sf4_php
